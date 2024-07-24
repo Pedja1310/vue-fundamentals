@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app" class="flex flex-col items-center">
+			<h1 class="text-5xl my-10">{{title}}</h1>
+			<div class="flex flex-row space-x-4 w-1/2">
+				<div class="flex flex-col border-black border-2 p-3 rounded-lg w-2/3">
+					<h1 class="text-2xl self-center">Actors</h1>
+					<div v-for="actor in actors" class="flex flex-row justify-between justify-items-start">
+						<div>
+							<p class="text-xl font-semibold">Name: {{actor.name}}</p>
+							<p class="text-lg">Age: {{actor.age}}</p>
+						</div>
+						<div>
+							<button @click="removeActor(actor.id)" class="rounded-md py-1 px-3 my-2 bg-red-700 text-white uppercase">
+								Remove
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="flex flex-col items-start border-2 border-black rounded-lg p-2 w-1/3 h-3/6">
+					<h4 class="text-2xl mb-2 self-center">Add actor</h4>
+					<div class="flex flex-col">
+						<label for="name" class="justify-start">Name</label>
+						<input
+							type="text"
+							id="name"
+							class="border-slate-700 border-2 rounded-lg h-8 px-2 mt-1"
+							v-model="newActor.name"
+						/>
+					</div>
+					<div class="flex flex-col mt-2">
+						<label for="age" class="justify-start">Age</label>
+						<input
+							type="number"
+							max="150"
+							min="0"
+							id="age"
+							class="border-slate-700 border-2 rounded-lg h-8 px-2 mt-1"
+							v-model="newActor.age"
+						/>
+					</div>
+					<button
+						@click="addActor"
+						class="bg-green-700 text-white uppercase border-2 py-2 px-3 rounded-lg mt-4 self-center"
+					>
+						Add actor
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		const app = Vue.createApp({
+			data: () => ({
+				title: "Vue.js Actors DB",
+				newActor: {
+					name: "",
+					age: 0,
+				},
+				actors: [
+					{ name: "Tom Cruise", age: 58, id: "8ab2a8a9-2377-4c3f-8e2e-aa10f4058d89" },
+					{ name: "Robert Downey Jr.", age: 56, id: "7d72e32b-5136-403e-8f2e-407e51b6fc8d" },
+					{ name: "Chris Hemsworth", age: 37, id: "30eaa4fa-9de9-4fe0-9364-2ae5a1f35f18" },
+					{ name: "Chris Evans", age: 39, id: "ab200547-c124-4bec-b73d-3b6f77c54c45" },
+					{ name: "Scarlett Johansson", age: 36, id: "8e5af495-ad8e-4303-843a-b3b1ee7ffac8" },
+				],
+			}),
+			methods: {
+				addActor() {
+					if (this.newActor.name === "" || this.newActor.age === 0) return;
+					this.actors.push({ ...this.newActor, id: "9b096671-a951-4fe2-858c-cd97acf7658f" });
+				},
+				removeActor(id, $event) {
+					if (!id) return;
+					this.actors = this.actors.filter((actor) => actor.id !== id);
+				},
+			},
+		});
+
+		app.mount("#app");
+	</script>
+</html>
