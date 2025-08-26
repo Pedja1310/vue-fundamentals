@@ -7,7 +7,13 @@
 	</head>
 	<body>
 		<h1>Hello World!</h1>
-		<div id="app">{{ message }}</div>
+		<div id="app">
+			<p v-if="message.length % 2 === 0">Even: {{ message }}</p>
+			<p v-else>Odd: {{ message }}</p>
+			<ul>
+				<li v-for="number in listOfNumbers">{{ number }}</li>
+			</ul>
+		</div>
 		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 		<script>
 			const { createApp } = Vue;
@@ -16,6 +22,7 @@
 				data() {
 					return {
 						message: "Hello it works!",
+						listOfNumbers: [1, 2, 3, 4, 5],
 					};
 				},
 			});
